@@ -15,6 +15,9 @@ class QuestionsRepository {
   /// The number of questions remaining in the repository question bank.
   int get questionsRemaining => _questionBank.length;
 
+  /// The total number of questions in the repository question bank.
+  final int questionsTotal = kQuestions.length;
+
   /// The total net points available for all questions.
   int get totalPoints => _getTotalPoints();
 

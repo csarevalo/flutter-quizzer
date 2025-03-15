@@ -2,7 +2,7 @@ part of 'quizzer_bloc.dart';
 
 /// The current status of the quiz.
 enum QuizzerStatus {
-  /// Quizzer app initial status.
+  /// Quiz initial (not started) status.
   initial,
 
   /// Quiz in progress status.
@@ -21,6 +21,7 @@ final class QuizzerState extends Equatable {
     this.status = QuizzerStatus.initial,
     this.score = 0,
     this.question = Question.empty,
+    this.history = const <QuestionAnswer>[],
   });
 
   /// The status of the quiz.
@@ -32,19 +33,24 @@ final class QuizzerState extends Equatable {
   /// The latest question in the quiz.
   final Question question;
 
+  /// A quiz history of questions and answers.
+  final List<QuestionAnswer> history;
+
   /// Copy [QuizzerState] with new values.
   QuizzerState copyWith({
     QuizzerStatus? status,
     int? score,
     Question? question,
+    List<QuestionAnswer>? history,
   }) {
     return QuizzerState(
       status: status ?? this.status,
       score: score ?? this.score,
       question: question ?? this.question,
+      history: history ?? this.history,
     );
   }
 
   @override
-  List<Object> get props => [status, score, question];
+  List<Object> get props => [status, score, question, history];
 }
