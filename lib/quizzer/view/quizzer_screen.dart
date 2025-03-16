@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quizzer/l10n/l10n.dart';
 import 'package:flutter_quizzer/quizzer/bloc/quizzer_bloc.dart';
 import 'package:flutter_quizzer/quizzer/view/view.dart';
+import 'package:flutter_quizzer/quizzer/widgets/snackbar_content.dart';
 import 'package:questions_repository/questions_repository.dart';
 
 class QuizzerScreen extends StatelessWidget {
@@ -46,7 +47,38 @@ class QuizzerView extends StatelessWidget {
         builder: (context, state) {
           return switch (state.status) {
             QuizzerStatus.initial => const QuizzerInitialView(),
-            QuizzerStatus.inProgress => const QuizzerInProgressView(),
+            QuizzerStatus.inProgress => BlocListener<QuizzerBloc, QuizzerState>(
+              listenWhen: (prev, curr) => prev.status != QuizzerStatus.initial,
+              listener: (context, state) {
+                final lastUserAns = state.history.last.userAnswer;
+                final lastCorrectAns = state.history.last.correctAnswer;
+                final wasCorrect = lastCorrectAns == lastUserAns;
+                if (wasCorrect) {
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(
+                      const SnackBar(
+                        behavior: SnackBarBehavior.fixed,
+                        backgroundColor: Colors.tealAccent,
+                        duration: Duration(milliseconds: 500),
+                        content: ExcellentSnackbarContent(),
+                      ),
+                    );
+                } else {
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(
+                      SnackBar(
+                        behavior: SnackBarBehavior.fixed,
+                        backgroundColor: Colors.red[100],
+                        duration: const Duration(milliseconds: 500),
+                        content: const GoodTrySnackbarContent(),
+                      ),
+                    );
+                }
+              },
+              child: const QuizzerInProgressView(),
+            ),
             QuizzerStatus.done => const QuizzerResultsView(),
           };
         },
