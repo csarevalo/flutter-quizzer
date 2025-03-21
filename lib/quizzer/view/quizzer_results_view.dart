@@ -1,10 +1,73 @@
+import 'dart:async';
+import 'dart:math' show Random;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_confetti/flutter_confetti.dart';
 import 'package:flutter_quizzer/quizzer/bloc/quizzer_bloc.dart';
 import 'package:flutter_quizzer/quizzer/widgets/widgets.dart';
 
-class QuizzerResultsView extends StatelessWidget {
+class QuizzerResultsView extends StatefulWidget {
   const QuizzerResultsView({super.key});
+
+  @override
+  State<QuizzerResultsView> createState() => _QuizzerResultsViewState();
+}
+
+class _QuizzerResultsViewState extends State<QuizzerResultsView> {
+  ConfettiController? _controller1;
+  ConfettiController? _controller2;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => sprinkleConfetti());
+  }
+
+  void sprinkleConfetti() {
+    const total = 15;
+    var progress = 0;
+    Timer.periodic(const Duration(milliseconds: 250), (timer) {
+      progress++;
+      if (progress >= total || !mounted) {
+        timer.cancel();
+        return;
+      }
+
+      final count = ((1 - progress / total) * 50).toInt();
+
+      final confettiOptions = ConfettiOptions(
+        particleCount: count,
+        startVelocity: 30,
+        spread: 360,
+        ticks: 60,
+        x: 1, //placeholder
+        y: 2, //placeholder
+      );
+
+      _controller1 = Confetti.launch(
+        context,
+        options: confettiOptions.copyWith(
+          x: randomInRange(0.1, 0.3),
+          y: Random().nextDouble() - 0.2,
+        ),
+      );
+      _controller2 = Confetti.launch(
+        context,
+        options: confettiOptions.copyWith(
+          x: randomInRange(0.7, 0.9),
+          y: Random().nextDouble() - 0.2,
+        ),
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller1?.kill();
+    _controller2?.kill();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,4 +120,8 @@ class QuizzerResultsView extends StatelessWidget {
       ],
     );
   }
+}
+
+double randomInRange(double min, double max) {
+  return min + Random().nextDouble() * (max - min);
 }

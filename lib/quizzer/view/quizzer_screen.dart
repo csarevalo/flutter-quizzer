@@ -60,7 +60,7 @@ class QuizzerView extends StatelessWidget {
                       const SnackBar(
                         behavior: SnackBarBehavior.fixed,
                         backgroundColor: Colors.tealAccent,
-                        duration: Duration(milliseconds: 500),
+                        duration: Duration(milliseconds: 450),
                         content: ExcellentSnackbarContent(),
                       ),
                     );
@@ -71,7 +71,7 @@ class QuizzerView extends StatelessWidget {
                       SnackBar(
                         behavior: SnackBarBehavior.fixed,
                         backgroundColor: Colors.red[100],
-                        duration: const Duration(milliseconds: 500),
+                        duration: const Duration(milliseconds: 450),
                         content: const GoodTrySnackbarContent(),
                       ),
                     );
