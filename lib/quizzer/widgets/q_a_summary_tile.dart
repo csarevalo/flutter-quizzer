@@ -3,9 +3,9 @@ import 'package:flutter_quizzer/quizzer/models/question_answer.dart';
 
 class QASummaryTile extends StatelessWidget {
   const QASummaryTile({
-    super.key,
     required this.number,
     required this.questionAnswer,
+    super.key,
   });
 
   final int number;

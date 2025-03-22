@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class AnswerTiles extends StatelessWidget {
   const AnswerTiles({
-    super.key,
     required this.answers,
     required this.onTap,
+    super.key,
     this.spacing = 32,
   });
 
@@ -35,9 +35,9 @@ class AnswerTiles extends StatelessWidget {
 
 class _AnswerTile extends StatelessWidget {
   const _AnswerTile({
-    super.key,
     required this.answer,
     required this.onPressed,
+    super.key,
     this.textPadding = 8,
   });
 

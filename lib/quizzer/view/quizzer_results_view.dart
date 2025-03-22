@@ -90,13 +90,16 @@ class _QuizzerResultsViewState extends State<QuizzerResultsView> {
           child: ListView(
             shrinkWrap: true,
             children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(56, 16, 24, 4),
-                child: Text(
-                  'You answered $numCorrectAnswers out of $numTotalQuestions '
-                  'questions correctly! (+$score $scoreLabel)',
-                  style: textTheme.headlineSmall!.copyWith(
-                    color: colorScheme.primary,
+              Card(
+                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(38, 6, 19, 12),
+                  child: Text(
+                    'You answered $numCorrectAnswers out of $numTotalQuestions '
+                    'questions correctly! (+$score $scoreLabel)',
+                    style: textTheme.headlineSmall!.copyWith(
+                      color: colorScheme.primary,
+                    ),
                   ),
                 ),
               ),

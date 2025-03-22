@@ -32,7 +32,12 @@ class QuizzerView extends StatelessWidget {
     final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.quizzerAppBarTitle),
+        title: Text(
+          l10n.quizzerAppBarTitle,
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        ),
         bottom: PreferredSize(
           preferredSize: const Size(double.infinity, 6),
           child: BlocBuilder<QuizzerBloc, QuizzerState>(
@@ -60,7 +65,7 @@ class QuizzerView extends StatelessWidget {
                       const SnackBar(
                         behavior: SnackBarBehavior.fixed,
                         backgroundColor: Colors.tealAccent,
-                        duration: Duration(milliseconds: 450),
+                        duration: Duration(milliseconds: 400),
                         content: ExcellentSnackbarContent(),
                       ),
                     );
@@ -71,7 +76,7 @@ class QuizzerView extends StatelessWidget {
                       SnackBar(
                         behavior: SnackBarBehavior.fixed,
                         backgroundColor: Colors.red[100],
-                        duration: const Duration(milliseconds: 450),
+                        duration: const Duration(milliseconds: 400),
                         content: const GoodTrySnackbarContent(),
                       ),
                     );
