@@ -2,7 +2,7 @@
 // ignore_for_file: prefer_const_constructors, avoid_redundant_argument_values
 
 import 'package:bloc_test/bloc_test.dart';
-import 'package:flutter_quizzer/quizzer/bloc/quizzer_bloc.dart';
+import 'package:flutter_quizzer/quizzer/quizzer.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:questions_repository/questions_repository.dart';
@@ -30,6 +30,94 @@ void main() {
       test('has correct initial state', () {
         expect(buildBloc().state, QuizzerState());
       });
+    });
+
+    blocTest<QuizzerBloc, QuizzerState>(
+      'totalQuestions returns questions left in repositor',
+      build: buildBloc,
+      setUp:
+          () => when(() => questionsRepository.questionsTotal).thenReturn(10),
+      verify: (bloc) => expect(bloc.totalQuestions, equals(10)),
+    );
+
+    group('getProgress()', () {
+      late double expectedProgress;
+      late double progress;
+      blocTest<QuizzerBloc, QuizzerState>(
+        'returns correct progress during first question',
+        setUp: () {
+          when(() => questionsRepository.questionsTotal).thenReturn(10);
+          when(() => questionsRepository.questionsRemaining).thenReturn(9);
+          expectedProgress = 0; // 1 question is dispensed but none answered
+        },
+        build: buildBloc,
+        act: (bloc) => progress = bloc.getProgress(),
+        verify: (bloc) {
+          verify(() => bloc.getProgress()).called(1);
+          expect(progress, expectedProgress);
+        },
+      );
+
+      blocTest<QuizzerBloc, QuizzerState>(
+        'returns correct progress during last question',
+        setUp: () {
+          when(() => questionsRepository.questionsTotal).thenReturn(10);
+          when(() => questionsRepository.questionsRemaining).thenReturn(0);
+          expectedProgress = 9 / 10; // all questions dispensed, 1 is unanswered
+        },
+        build: buildBloc,
+        act: (bloc) => progress = bloc.getProgress(),
+        verify: (bloc) {
+          // BAD: should fail (but doesn't) because bloc isn't a mocktail object
+          // verify(() => bloc.getProgress()).called(1);
+          expect(progress, expectedProgress);
+        },
+      );
+
+      blocTest<QuizzerBloc, QuizzerState>(
+        'returns correct progress when quiz status is done',
+        setUp: () {
+          when(() => questionsRepository.questionsTotal).thenReturn(10);
+          when(() => questionsRepository.questionsRemaining).thenReturn(0);
+          expectedProgress = 10 / 10; // all questions r dispensed and answered
+        },
+        seed: () => QuizzerState(status: QuizzerStatus.done),
+        build: buildBloc,
+        act: (bloc) => progress = bloc.getProgress(),
+        verify: (bloc) {
+          expect(progress, expectedProgress);
+        },
+      );
+    });
+
+    group('getNumberCorrectAnswers()', () {
+      late List<QuestionAnswer> history;
+      late int numCorrectAnswers;
+      late int expectedNumCorrectAnswers;
+
+      blocTest<QuizzerBloc, QuizzerState>(
+        'returns correct progress during last question',
+        setUp: () {
+          final question = questionBank.first;
+          history = [
+            QuestionAnswer(
+              question: question.question,
+              points: question.points,
+              correctAnswer: question.answer,
+              userAnswer: question.answer,
+            ),
+          ];
+          expectedNumCorrectAnswers = 1;
+        },
+        build: buildBloc,
+        seed: () => QuizzerState(history: history),
+        act: (bloc) => numCorrectAnswers = bloc.getNumberCorrectAnswers(),
+        verify: (bloc) {
+          // BAD: failed because bloc is not a mocktail object
+          // verify(() => bloc.getNumberCorrectAnswers()).called(1);
+          expect(numCorrectAnswers, expectedNumCorrectAnswers);
+        },
+      );
     });
 
     group('QuizzerFirstQuestionRequested', () {
@@ -100,6 +188,14 @@ void main() {
                 status: QuizzerStatus.inProgress,
                 score: newScore,
                 question: question2,
+                history: [
+                  QuestionAnswer(
+                    question: question1.question,
+                    points: question1.points,
+                    correctAnswer: answer1,
+                    userAnswer: answer1,
+                  ),
+                ],
               ),
             ],
         verify: (bloc) {
@@ -133,6 +229,14 @@ void main() {
                 status: QuizzerStatus.inProgress,
                 score: newScore,
                 question: question2,
+                history: [
+                  QuestionAnswer(
+                    question: question1.question,
+                    points: 0,
+                    correctAnswer: question1.answer,
+                    userAnswer: 'wrong',
+                  ),
+                ],
               ),
             ],
         verify: (bloc) {
@@ -150,7 +254,7 @@ void main() {
             () => questionsRepository.getNextQuestion(),
           ).thenReturn(Question.empty);
 
-          initScore = 7; // made up score
+          initScore = question1.points; // made up score
           newScore = initScore + question2.points; // expect right answer
         },
         build: buildBloc,
@@ -159,6 +263,14 @@ void main() {
               status: QuizzerStatus.inProgress,
               score: initScore,
               question: question2,
+              history: [
+                QuestionAnswer(
+                  question: question1.question,
+                  points: question1.points,
+                  correctAnswer: question1.answer,
+                  userAnswer: question1.answer,
+                ),
+              ],
             ),
         act: (bloc) => bloc.add(QuizzerNextQuestionRequested(answer: answer2)),
         expect:
@@ -167,6 +279,20 @@ void main() {
                 status: QuizzerStatus.done, // quiz is over
                 score: newScore,
                 question: Question.empty,
+                history: [
+                  QuestionAnswer(
+                    question: question1.question,
+                    points: question1.points,
+                    correctAnswer: question1.answer,
+                    userAnswer: question1.answer,
+                  ),
+                  QuestionAnswer(
+                    question: question2.question,
+                    points: question2.points,
+                    correctAnswer: question2.answer,
+                    userAnswer: question2.answer,
+                  ),
+                ],
               ),
             ],
         verify: (bloc) {

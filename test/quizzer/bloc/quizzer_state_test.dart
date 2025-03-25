@@ -15,8 +15,14 @@ void main() {
       QuizzerStatus status = QuizzerStatus.initial,
       int score = 0,
       Question question = Question.empty,
+      List<QuestionAnswer> history = const [],
     }) {
-      return QuizzerState(status: status, score: score, question: question);
+      return QuizzerState(
+        status: status,
+        score: score,
+        question: question,
+        history: history,
+      );
     }
 
     test('supports value equality', () {
@@ -29,8 +35,9 @@ void main() {
           status: QuizzerStatus.inProgress,
           score: 1,
           question: Question.empty,
+          history: const [],
         ).props,
-        equals(<Object>[QuizzerStatus.inProgress, 1, Question.empty]),
+        equals(<Object>[QuizzerStatus.inProgress, 1, Question.empty, []]),
       );
     });
 
@@ -48,17 +55,25 @@ void main() {
         },
       );
       test('replaces every non-null value', () {
+        final qa = QuestionAnswer(
+          question: 'question',
+          points: 1,
+          correctAnswer: 'correctAnswer',
+          userAnswer: 'userAnswer',
+        );
         expect(
           createSubject().copyWith(
             status: QuizzerStatus.done,
             score: 2,
             question: kQuestions.first,
+            history: [qa],
           ),
           equals(
             createSubject(
               status: QuizzerStatus.done,
               score: 2,
               question: kQuestions.first,
+              history: [qa],
             ),
           ),
         );
