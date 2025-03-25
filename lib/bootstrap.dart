@@ -42,10 +42,9 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
 
-  Bloc.observer = const AppBlocObserver();
-
   // Add cross-flavor configuration here
   if (kDebugMode) {
+    Bloc.observer = const AppBlocObserver();
     log('app-flavor: ${appFlavor ?? 'none'}');
     Bloc.observer = const AppBlocObserver();
   }
