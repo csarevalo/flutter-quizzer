@@ -8,12 +8,13 @@ on:
   push:
     branches:
       - main
-  
-  paths:
-      - 'lib/**'
-      - '*.yaml'
-      - 'packages/**/lib/**'
-      - 'packages/**/*.yaml'
+
+    paths:
+        - 'lib/**'
+        - '*.yaml'
+        - 'packages/**/lib/**'
+        - 'packages/**/*.yaml'
+        - '.github/workflows/**'
 
   pull_request:
     branches:
