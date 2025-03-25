@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_quizzer/l10n/l10n.dart';
 import 'package:flutter_quizzer/quizzer/view/view.dart';
 
+///{@template app}
+/// The material app.
+/// {@endtemplate}
 class App extends StatelessWidget {
+  ///{@macro app}
   const App({super.key});
 
   @override
