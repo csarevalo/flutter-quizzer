@@ -86,6 +86,7 @@ class QuizzerBloc extends Bloc<QuizzerEvent, QuizzerState> {
     }
   }
 
+  /// Get progress of questions remaining that need answering
   double getProgress() {
     // If Quiz is done, progres is complete
     if (state.status == QuizzerStatus.done) return 1;
@@ -95,6 +96,7 @@ class QuizzerBloc extends Bloc<QuizzerEvent, QuizzerState> {
     return (questionsTotal - questionsRemaining - 1) / questionsTotal;
   }
 
+  /// Get the number of questions answered correctly
   int getNumberCorrectAnswers() {
     var numberCorrectAnswers = 0;
     for (final qa in state.history) {
@@ -103,5 +105,6 @@ class QuizzerBloc extends Bloc<QuizzerEvent, QuizzerState> {
     return numberCorrectAnswers;
   }
 
+  /// Get the number of total questions from repository
   int get totalQuestions => _questionsRepository.questionsTotal;
 }

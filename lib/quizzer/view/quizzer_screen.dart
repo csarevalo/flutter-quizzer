@@ -6,7 +6,11 @@ import 'package:flutter_quizzer/quizzer/view/view.dart';
 import 'package:flutter_quizzer/quizzer/widgets/snackbar_content.dart';
 import 'package:questions_repository/questions_repository.dart';
 
+///{@template quizzer_screen}
+/// Widget that provides the repository and bloc to all quizzer views
+/// {@endtemplate}
 class QuizzerScreen extends StatelessWidget {
+  ///{@macro quizzer_screen}
   const QuizzerScreen({super.key});
 
   @override
@@ -24,7 +28,12 @@ class QuizzerScreen extends StatelessWidget {
   }
 }
 
+///{@template quizzer_view}
+/// Widget that manages the views provided to the scaffold based on
+/// the `QuizzerBloc`
+/// {@endtemplate}
 class QuizzerView extends StatelessWidget {
+  ///{@macro quizzer_view}
   const QuizzerView({super.key});
 
   @override

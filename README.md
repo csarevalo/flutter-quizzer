@@ -14,7 +14,7 @@ A quiz app to test your knowledge of basic flutter concepts.
 Learn to develop flutter apps using BLoC, employ thorough testing, and implement simple animations (confetti!).
 * Transform a beginner quiz app from using stateful widgets to employing the BLoC pattern.
 * Included a question repository to seperate questions from the logic
-* Separated common views through Bloc Builder.
+* Seperated common views through Bloc Builder.
 
 ## Acknowledgements
 This project was inspired by Maximilian Schwarzmüller's Udemy course: 

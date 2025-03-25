@@ -3,7 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quizzer/l10n/l10n.dart';
 import 'package:flutter_quizzer/quizzer/bloc/quizzer_bloc.dart';
 
+///{@template quizzer_initial_view}
+/// Widget that contains the initial view of the quiz app.
+/// {@endtemplate}
 class QuizzerInitialView extends StatelessWidget {
+  ///{@macro quizzer_initial_view}
   const QuizzerInitialView({super.key});
 
   @override

@@ -9,11 +9,11 @@ on:
     branches:
       - main
   
-  # paths:
-  #     - 'lib/**'
-  #     - '*.yaml'
-  #     - 'packages/**/lib/**'
-  #     - 'packages/**/*.yaml'
+  paths:
+      - 'lib/**'
+      - '*.yaml'
+      - 'packages/**/lib/**'
+      - 'packages/**/*.yaml'
 
   pull_request:
     branches:

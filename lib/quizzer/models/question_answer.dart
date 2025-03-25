@@ -1,6 +1,11 @@
 import 'package:equatable/equatable.dart';
 
+///{@template question_answer}
+/// The model for the a question and answer provided by the user.
+/// Used to maintain a history of how questions were answered.
+/// {@endtemplate}
 class QuestionAnswer extends Equatable {
+  ///{@macro question_answer}
   const QuestionAnswer({
     required this.question,
     required this.points,

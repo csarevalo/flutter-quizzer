@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
+///{@template answer_tiles}
+/// Widget to provide possible answers to a specific question.
+/// It is essential to determine what happens onTap of the answer tiles (
+/// Recommended to add a BLoC event).
+/// {@endtemplate}
 class AnswerTiles extends StatelessWidget {
+  /// {@macro answer_tiles}
   const AnswerTiles({
     required this.answers,
     required this.onTap,
@@ -8,8 +14,13 @@ class AnswerTiles extends StatelessWidget {
     this.spacing = 32,
   });
 
+  /// List of answers
   final List<String> answers;
+
+  /// The spacing between each answer
   final double spacing;
+
+  /// Function called when the tile is tapped
   final void Function(String) onTap;
 
   @override

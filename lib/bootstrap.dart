@@ -6,7 +6,11 @@ import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/services.dart' show appFlavor;
 import 'package:flutter/widgets.dart';
 
+///{@template app_bloc_observer}
+/// A simple app bloc observer to log changes, transitions, errors, and events.
+/// {@endtemplate}
 class AppBlocObserver extends BlocObserver {
+  ///{@macro app_bloc_observer}
   const AppBlocObserver();
 
   @override
@@ -37,6 +41,8 @@ class AppBlocObserver extends BlocObserver {
   }
 }
 
+/// A critical function to strap functions and app flavors on
+/// the app before building.
 Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);

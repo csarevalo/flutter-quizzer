@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_quizzer/quizzer/models/question_answer.dart';
 
+///{@template qa_summary_tile}
+/// Widget presents the results of particular question (e.g. user answer vs
+/// actual answer)
+/// {@endtemplate}
 class QASummaryTile extends StatelessWidget {
+  ///{@macro qa_summary_tile}
   const QASummaryTile({
     required this.number,
     required this.questionAnswer,
     super.key,
   });
 
+  /// The number shown on the tile. Recommended to depict which question
+  /// number this tile shows.
   final int number;
+
+  /// The question and answer ([QuestionAnswer]) used to fill out the
+  /// tile information
   final QuestionAnswer questionAnswer;
 
   @override

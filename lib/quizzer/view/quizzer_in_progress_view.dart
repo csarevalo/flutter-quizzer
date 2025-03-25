@@ -3,7 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quizzer/quizzer/bloc/quizzer_bloc.dart';
 import 'package:flutter_quizzer/quizzer/widgets/widgets.dart';
 
+///{@template quizzer_in_progress_view}
+/// Widget that provides the view when the quiz is in-progress
+/// {@endtemplate}
 class QuizzerInProgressView extends StatelessWidget {
+  /// {@macro quizzer_in_progress_view}
   const QuizzerInProgressView({super.key});
 
   @override

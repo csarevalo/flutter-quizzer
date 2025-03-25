@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
+///{@template excellent_snackbar_content}
+/// Widget that contains a congratulatory snackbar message for user.
+/// {@endtemplate}
 class ExcellentSnackbarContent extends StatelessWidget {
+  ///{@macro excellent_snackbar_content}
   const ExcellentSnackbarContent({super.key});
 
   @override
@@ -21,7 +25,11 @@ class ExcellentSnackbarContent extends StatelessWidget {
   }
 }
 
+///{@template good_try_snackbar_content}
+/// Widget that contains an encouraging snackbar message for user.
+/// {@endtemplate}
 class GoodTrySnackbarContent extends StatelessWidget {
+  ///{@macro good_try_snackbar_content}
   const GoodTrySnackbarContent({super.key});
 
   @override

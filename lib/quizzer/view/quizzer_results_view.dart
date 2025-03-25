@@ -7,7 +7,11 @@ import 'package:flutter_confetti/flutter_confetti.dart';
 import 'package:flutter_quizzer/quizzer/bloc/quizzer_bloc.dart';
 import 'package:flutter_quizzer/quizzer/widgets/widgets.dart';
 
+///{@template quizzer_results_view}
+/// Widget that provides view to showcase the quiz results
+/// {@endtemplate}
 class QuizzerResultsView extends StatefulWidget {
+  ///{@macro quizzer_results_view}
   const QuizzerResultsView({super.key});
 
   @override
@@ -125,6 +129,7 @@ class _QuizzerResultsViewState extends State<QuizzerResultsView> {
   }
 }
 
+/// Determine a random number between the min and max range values
 double randomInRange(double min, double max) {
   return min + Random().nextDouble() * (max - min);
 }
